@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zego.mapper.UserInfoMapper">
+
+    <resultMap type="com.zego.entity.UserInfo" id="UserInfo">
+        <id column="id" property="id" />
+        <result column="mobile" property="mobile" />
+        <result column="subordinate_platform" property="subordinatePlatform" />
+        <result column="platform_user_id" property="platformUserId" />
+        <result column="account" property="account" />
+        <result column="state" property="state" />
+        <result column="create_time" property="createTime" />
+        <result column="update_time" property="updateTime" />
+        <result column="expired_time" property="expiredTime" />
+        <result column="access_key" property="accessKey" />
+    </resultMap>
+
+    <select id="selectUserInfo" resultMap="UserInfo">
+        select *
+        from t_user_info
+        where id = #{id}
+    </select>
+
+</mapper>

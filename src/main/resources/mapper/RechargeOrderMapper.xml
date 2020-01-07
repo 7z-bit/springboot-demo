@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zego.mapper.RechargeOrderMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="RechargeOrder" type="com.zego.entity.RechargeOrder">
+        <id column="id" property="id" />
+        <result column="order_no" property="orderNo" />
+        <result column="goods_id" property="goodsId" />
+        <result column="recharge_unit_price" property="rechargeUnitPrice" />
+        <result column="sale_unit_price" property="saleUnitPrice" />
+        <result column="operator_id" property="operatorId" />
+        <result column="operator_name" property="operatorName" />
+        <result column="interface_id" property="interfaceId" />
+        <result column="interface_name" property="interfaceName" />
+        <result column="recharge_num" property="rechargeNum" />
+        <result column="recharge_money" property="rechargeMoney" />
+        <result column="pay_money" property="payMoney" />
+        <result column="mobile" property="mobile" />
+        <result column="user_id" property="userId" />
+        <result column="order_status" property="orderStatus" />
+        <result column="interface_message" property="interfaceMessage" />
+        <result column="recharge_callback_message" property="rechargeCallbackMessage" />
+        <result column="is_recharge_callback" property="isRechargeCallback" />
+        <result column="pay_status" property="payStatus" />
+        <result column="pay_callback_status" property="payCallbackStatus" />
+        <result column="pay_order_no" property="payOrderNo" />
+        <result column="third_recharge_order_no" property="thirdRechargeOrderNo" />
+        <result column="third_recharge_order_id" property="thirdRechargeOrderId" />
+        <result column="platform_id" property="platformId" />
+        <result column="paltform_order_id" property="paltformOrderId" />
+        <result column="paltform_order_no" property="paltformOrderNo" />
+        <result column="refund_status" property="refundStatus" />
+        <result column="refund_money" property="refundMoney" />
+        <result column="order_create_time" property="orderCreateTime" />
+        <result column="pay_time" property="payTime" />
+        <result column="third_recharge_time" property="thirdRechargeTime" />
+        <result column="shal_pay_md5" property="shalPayMd5" />
+        <result column="goods_name" property="goodsName" />
+        <result column="goods_desc" property="goodsDesc" />
+        <result column="type" property="type" />
+        <result column="coupon_id" property="couponId" />
+        <result column="coupon_code" property="couponCode" />
+        <result column="kammi" property="kammi" />
+        <result column="discount_amount" property="discountAmount" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, order_no, goods_id, recharge_unit_price, sale_unit_price, operator_id, operator_name, interface_id, interface_name, recharge_num, recharge_money, pay_money, mobile, user_id, order_status, interface_message, recharge_callback_message, is_recharge_callback, pay_status, pay_callback_status, pay_order_no, third_recharge_order_no, third_recharge_order_id, platform_id, paltform_order_id, paltform_order_no, refund_status, refund_money, order_create_time, pay_time, third_recharge_time, shal_pay_md5, goods_name, goods_desc, type, coupon_id, coupon_code, kammi, discount_amount
+    </sql>
+
+    <select id="selectByOrderNo" resultMap="RechargeOrder" >
+        select * from ${tableName}
+        where order_no = #{orderNo}
+    </select>
+
+    <update id="updateOrder" parameterType="com.zego.entity.RechargeOrder">
+        update ${tableName}
+        <trim prefix="set" suffixOverrides=",">
+            <if test="orderStatus != null">order_status = #{orderStatus},</if>
+            <if test="interfaceId != null">interface_id = #{interfaceId},</if>
+        </trim>
+        where order_no = #{orderNo}
+    </update>
+
+</mapper>

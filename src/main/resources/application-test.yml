@@ -1,0 +1,41 @@
+server:
+  port: 9000
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.50.50:3306/zego_recharge?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 123456
+
+  activemq:
+    broker-url: tcp://192.168.50.50:61616
+    user: admin
+    password: admin
+    in-memory: false
+    pool:
+      enabled: true
+      max-connections: 10
+
+  rabbitmq:
+    host: 192.168.50.50
+    port: 5678
+    username: admin
+    password: admin
+    virtual-host: /
+
+  redis:
+    database: 0
+    host: 192.168.50.50
+    port: 6379
+    password:
+    lettuce:
+      pool:
+        max-active: 8
+        max-wait: -1
+        max-idle: 8
+        min-idle: 0
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.zego.entity
