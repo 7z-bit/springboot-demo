@@ -1,5 +1,9 @@
 package com.zego.controller;
 
+import com.alibaba.fastjson.JSON;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zego.common.Result;
+import com.zego.common.ReturnCode;
 import com.zego.entity.MultieloadParames;
 import com.zego.entity.RechargeOrder;
 import com.zego.entity.UserInfo;
@@ -11,14 +15,12 @@ import com.zego.service.impl.SendLogMessageMQ;
 import com.zego.entity.RechargeLog;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.jms.*;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class TestController {
@@ -49,6 +51,30 @@ public class TestController {
     @GetMapping("/user/{id}")
     public List<UserInfo> user(@PathVariable(value = "id") String id){
         return userInfoService.selectUserInfo(id);
+    }
+
+    @PostMapping("/user")
+    public Result user(@RequestParam Map request){
+        Result result = new Result();
+        Page<UserInfo> page = new Page<>();
+        String current = (String)request.get("current");
+        String size = (String)request.get("size");
+        if(StringUtils.isEmpty(current) || StringUtils.isEmpty(size)){
+            result.setCode(ReturnCode.queryFail.getCode());
+            result.setMsg(ReturnCode.queryFail.getMsg());
+            return result;
+        }
+        try {
+            page.setCurrent(new Long(current));
+            page.setSize(new Long(size));
+            page.setRecords(userInfoService.listUser(page));
+        }catch (Exception e){
+
+        }
+        result.setCode(ReturnCode.querySuccess.getCode());
+        result.setMsg(ReturnCode.querySuccess.getMsg());
+        result.setData(page);
+        return result;
     }
 
     @GetMapping("/rechargeOrder")

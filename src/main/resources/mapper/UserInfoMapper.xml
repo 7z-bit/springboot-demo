@@ -21,4 +21,10 @@
         where id = #{id}
     </select>
 
+    <select id="listUsers" resultMap="UserInfo">
+        select *
+        from t_user_info
+        order by id desc
+    </select>
+
 </mapper>

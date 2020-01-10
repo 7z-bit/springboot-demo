@@ -12,6 +12,8 @@ target/
 .settings
 .springBeans
 .sts4-cache
+.mvnw
+.mvnw.cmd
 
 ### IntelliJ IDEA ###
 .idea
@@ -29,8 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-/target/
-.classpath
-.project
-.settings
