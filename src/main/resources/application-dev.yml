@@ -9,7 +9,7 @@ spring:
     password: 123456
 
   activemq:
-    broker-url: tcp://192.168.50.50:61616
+    broker-url: tcp://114.55.30.167:61616
     user: admin
     password: admin
     in-memory: false
@@ -18,8 +18,8 @@ spring:
       max-connections: 10
 
   rabbitmq:
-    host: 192.168.50.50
-    port: 5678
+    host: 114.55.30.167
+    port: 5672
     username: admin
     password: admin
     virtual-host: /

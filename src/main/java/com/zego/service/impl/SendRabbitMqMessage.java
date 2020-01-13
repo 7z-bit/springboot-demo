@@ -14,12 +14,12 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
-public class RabbitMqProducer {
+public class SendRabbitMqMessage {
 
     @Resource
     private AmqpTemplate amqpTemplate;
 
-    private final static Logger logger = Logger.getLogger(RabbitMqProducer.class);
+    private final static Logger logger = Logger.getLogger(SendRabbitMqMessage.class);
 
     //公共入队方法
     public void sendMessageToQueue(String queueKey, Object object) {

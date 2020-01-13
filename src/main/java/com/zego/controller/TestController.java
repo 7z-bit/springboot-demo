@@ -1,7 +1,7 @@
 package com.zego.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zego.common.Globals;
 import com.zego.common.Result;
 import com.zego.common.ReturnCode;
 import com.zego.entity.MultieloadParames;
@@ -10,8 +10,8 @@ import com.zego.entity.UserInfo;
 import com.zego.service.RechargeOrderService;
 import com.zego.service.RedisService;
 import com.zego.service.UserInfoService;
-import com.zego.service.impl.RabbitMqProducer;
-import com.zego.service.impl.SendLogMessageMQ;
+import com.zego.service.impl.SendRabbitMqMessage;
+import com.zego.service.impl.SendActiveMqMessage;
 import com.zego.entity.RechargeLog;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +28,10 @@ public class TestController {
     private static final Logger logger = Logger.getLogger(TestController.class);
 
     @Autowired
-    private SendLogMessageMQ sendLogMessageMQ;
+    private SendActiveMqMessage sendActiveMqMessage;
 
     @Autowired
-    private RabbitMqProducer rabbitMqProducer;
+    private SendRabbitMqMessage sendRabbitMqMessage;
 
     @Autowired
     private RedisService redisService;
@@ -110,7 +110,7 @@ public class TestController {
         return redisService.get(key);
     }
 
-    @GetMapping("/sendLogMessage")
+    @GetMapping("/sendActiveMessage")
     public String sendLogMessage(String name) {
         RechargeLog log = new RechargeLog();
         log.setUserId((long)11);
@@ -118,7 +118,7 @@ public class TestController {
         log.setType((short)1);
         log.setLogInfo(name);
         log.setCreateTime(new Date());
-        sendLogMessageMQ.sendLogMessageMQ(log);
+        sendActiveMqMessage.sendMessageMQ(log);
         return "success";
     }
 
@@ -135,7 +135,7 @@ public class TestController {
         multieloadParames.setFmt("json");
         multieloadParames.setOpt("1");
         try {
-            rabbitMqProducer.sendMessageToQueue("zegobirdRechargeQueueKey", multieloadParames);
+            sendRabbitMqMessage.sendMessageToQueue(Globals.RABBIT_QUEUE, multieloadParames);
         }catch(Exception e) {
             logger.info(e.getMessage());
         }
